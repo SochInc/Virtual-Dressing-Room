@@ -53,8 +53,14 @@ while True:
     #cv2.imshow("tshirt", mask)
 
     cam[height:height + t_height, width:width + t_width] = t_shirt
+    font = cv2.FONT_HERSHEY_SIMPLEX # Creates a font
+    x = 10  # position of text
+    y = 20  # position of text
 
-    cv2.imshow('Image', cam)
+    cv2.putText(cam, "press 'n' key for next item and 'p' for previous", (x, y), font, .8,(255,255,255), 1 )  # Draw the text
+    cv2.namedWindow("frame", cv2.WINDOW_NORMAL)
+    cv2.resizeWindow("frame", int(cam.shape[1] * 1.4), int(cam.shape[0] * 1.4))
+    cv2.imshow('frame', cam)
     key = cv2.waitKey(10)
     if key & 0xFF == ord('n'):
         if curClothId == len(images) - 1:
