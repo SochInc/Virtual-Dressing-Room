@@ -12,7 +12,7 @@ def main():
         cp.capture()
 
     w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-#    root.geometry("%dx%d+0+0" % (w, h))
+    root.geometry("%dx%d+0+0" % (w, h))
 
     canvas = tk.Canvas(root, width=w, height=h)
     canvas.pack()
