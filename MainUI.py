@@ -1,8 +1,7 @@
 import tkinter as tk
-from PIL import ImageTk
+from PIL import ImageTk, Image
 
-import detect_circle as cp
-import cv2
+import MainCam as cp
 
 
 def main():
@@ -12,10 +11,15 @@ def main():
     def callback():
         cp.capture()
 
-    canvas = tk.Canvas(root, width=1220, height=1000)
+    w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+#    root.geometry("%dx%d+0+0" % (w, h))
+
+    canvas = tk.Canvas(root, width=w, height=h)
     canvas.pack()
-    tk_img = ImageTk.PhotoImage(file="ecommerce.png")
-    canvas.create_image(610, 500, image=tk_img)
+    image = Image.open("ecommerce.png")
+    image = image.resize((w,h), Image.ANTIALIAS)
+    tk_img = ImageTk.PhotoImage(image)
+    canvas.create_image(w/2, h/2, image=tk_img)
     image = ImageTk.PhotoImage(file="phon.png")
 
     button = tk.Button(root, image=image, command=callback, activebackground="#33B5E5")
