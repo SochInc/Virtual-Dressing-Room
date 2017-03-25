@@ -9,14 +9,15 @@ import PIL
 def capture():
     cap = cv2.VideoCapture(0)
     images = cc.loadImages()
+    thres = [0, 40, 75, 130, 130]
     size = 180
     curClothId = 0
+    th = thres[0]
 
     while True:
         (ret, cam) = cap.read()
         cam = cv2.flip(cam, 1, 0)
         t_shirt = images[curClothId]
-        # t_shirt = cv2.imread("tshirt2.jpg", -1)
         resized = imutils.resize(cam, width=800)
         gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
@@ -36,7 +37,6 @@ def capture():
             size = 100
 
         t_shirt = imutils.resize(t_shirt, width=size)
-        print(t_shirt.shape)
 
         f_height = cam.shape[0]
         f_width = cam.shape[1]
@@ -46,7 +46,7 @@ def capture():
         width = f_width / 2 - t_width / 2
         rows, cols, channels = t_shirt.shape
         t_shirt_gray = cv2.cvtColor(t_shirt, cv2.COLOR_BGR2GRAY)
-        ret, mask = cv2.threshold(t_shirt_gray, 170, 255, cv2.THRESH_BINARY_INV)
+        ret, mask = cv2.threshold(t_shirt_gray, th, 255, cv2.THRESH_BINARY_INV)
         mask_inv = cv2.bitwise_not(mask)
         roi = cam[height:height + t_height, width:width + t_width]
         img_bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
@@ -71,6 +71,8 @@ def capture():
                 print("image out of bound")
             else:
                 curClothId += 1
+                th = thres[curClothId]
+                
         if key & 0xFF == ord('p'):
             if curClothId == -1:
                 print("image out of bound")
@@ -80,3 +82,6 @@ def capture():
         if key == 27:
             break
     return
+
+if __name__ == '__main__':
+    capture()
