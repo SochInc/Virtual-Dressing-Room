@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-
+from tkinter import messagebox
 import MainCam as cp
 
 
@@ -9,6 +9,7 @@ def main():
 
     # Code to add widgets will go here...
     def callback():
+        messagebox.showwarning("Warning", "please start streaming from your camera( if external)")
         cp.capture()
 
     w, h = root.winfo_screenwidth(), root.winfo_screenheight()
