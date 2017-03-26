@@ -1,6 +1,5 @@
 import tkinter as tk
 from PIL import ImageTk, Image
-from tkinter import messagebox
 import MainCam as cp
 
 
@@ -9,7 +8,6 @@ def main():
 
     # Code to add widgets will go here...
     def callback():
-        messagebox.showwarning("Warning", "please start streaming from your camera( if external)")
         cp.capture()
 
     w, h = root.winfo_screenwidth(), root.winfo_screenheight()
@@ -17,14 +15,24 @@ def main():
 
     canvas = tk.Canvas(root, width=w, height=h)
     canvas.pack()
-    image = Image.open("ecommerce.png")
-    image = image.resize((w,h), Image.ANTIALIAS)
-    tk_img = ImageTk.PhotoImage(image)
-    canvas.create_image(w/2, h/2, image=tk_img)
-    image = ImageTk.PhotoImage(file="phon.png")
 
-    button = tk.Button(root, image=image, command=callback, activebackground="#33B5E5")
-    button_window = canvas.create_window(500, 500, anchor='nw', window=button)
+    image = Image.open("bgtry.png")
+    image = image.resize((w, h), Image.ANTIALIAS)
+    tk_img = ImageTk.PhotoImage(image)
+    bgcanvas = canvas.create_image(w / 2, h / 2, image=tk_img)
+
+    image = ImageTk.PhotoImage(file="trial.png")
+    button = tk.Button(root, image=image, command=callback, bd=0)
+    button_window = canvas.create_window((w / 2) - 360, (h / 2) - (66 / 2) + 160, anchor='nw', window=button)
+
+    next = ImageTk.PhotoImage(file="next.png")
+    button1 = tk.Button(root, image=next, command=callback, bd=0)
+    button_window = canvas.create_window(w - (w / 15), (h / 2), window=button1)
+
+    prev = ImageTk.PhotoImage(file="prev.png")
+    button1 = tk.Button(root, image=prev, command=callback, bd=0)
+    button_window = canvas.create_window((w / 15), (h / 2), window=button1)
+
     root.mainloop()
 
 

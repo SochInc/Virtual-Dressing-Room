@@ -17,7 +17,7 @@ def capture():
     images = cc.loadImages()
     thres = [130, 40, 75, 130]
     size = 180
-    curClothId = 0
+    curClothId = 1
     th = thres[0]
 
     while True:
@@ -101,6 +101,3 @@ def capture():
             if key == 27:
                 break
     return
-
-if __name__ == '__main__':
-    capture()
